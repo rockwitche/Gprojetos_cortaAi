@@ -1,0 +1,164 @@
+import type { Request } from 'express';
+import { BarbeariaService } from './barbearia.service.js';
+import { CreateBarbeariaDto, UpdateBarbeariaDto } from './dto/barbearia.dto.js';
+export declare class BarbeariaController {
+    private readonly service;
+    constructor(service: BarbeariaService);
+    findAll(estado?: string, cidade?: string, busca?: string): Promise<{
+        id: string;
+        nome: string;
+        telefone: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        endereco: string;
+        cidade: string;
+        estado: string;
+        descricao: string | null;
+        cep: string | null;
+        pontoReferencia: string | null;
+        latitude: number | null;
+        longitude: number | null;
+        whatsapp: string | null;
+        mensagemLembrete: string | null;
+        lembreteAtivo: boolean;
+        foto: string | null;
+        fotos: string[];
+        ativa: boolean;
+        slug: string;
+        ownerId: string;
+    }[]>;
+    minhas(req: Request): Promise<{
+        id: string;
+        nome: string;
+        telefone: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        endereco: string;
+        cidade: string;
+        estado: string;
+        descricao: string | null;
+        cep: string | null;
+        pontoReferencia: string | null;
+        latitude: number | null;
+        longitude: number | null;
+        whatsapp: string | null;
+        mensagemLembrete: string | null;
+        lembreteAtivo: boolean;
+        foto: string | null;
+        fotos: string[];
+        ativa: boolean;
+        slug: string;
+        ownerId: string;
+    }[]>;
+    findOne(slugOuId: string): Promise<{
+        barbeiros: ({
+            servicos: {
+                id: string;
+                nome: string;
+                createdAt: Date;
+                updatedAt: Date;
+                barbeariaId: string;
+                ativo: boolean;
+                preco: number;
+                duracao: number;
+                barbeiroId: string | null;
+            }[];
+        } & {
+            id: string;
+            nome: string;
+            createdAt: Date;
+            updatedAt: Date;
+            foto: string | null;
+            barbeariaId: string;
+            ativo: boolean;
+        })[];
+        servicos: {
+            id: string;
+            nome: string;
+            createdAt: Date;
+            updatedAt: Date;
+            barbeariaId: string;
+            ativo: boolean;
+            preco: number;
+            duracao: number;
+            barbeiroId: string | null;
+        }[];
+    } & {
+        id: string;
+        nome: string;
+        telefone: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+        endereco: string;
+        cidade: string;
+        estado: string;
+        descricao: string | null;
+        cep: string | null;
+        pontoReferencia: string | null;
+        latitude: number | null;
+        longitude: number | null;
+        whatsapp: string | null;
+        mensagemLembrete: string | null;
+        lembreteAtivo: boolean;
+        foto: string | null;
+        fotos: string[];
+        ativa: boolean;
+        slug: string;
+        ownerId: string;
+    }>;
+    create(req: Request, dto: CreateBarbeariaDto): Promise<{
+        message: string;
+        barbearia: {
+            id: string;
+            nome: string;
+            telefone: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            endereco: string;
+            cidade: string;
+            estado: string;
+            descricao: string | null;
+            cep: string | null;
+            pontoReferencia: string | null;
+            latitude: number | null;
+            longitude: number | null;
+            whatsapp: string | null;
+            mensagemLembrete: string | null;
+            lembreteAtivo: boolean;
+            foto: string | null;
+            fotos: string[];
+            ativa: boolean;
+            slug: string;
+            ownerId: string;
+        };
+    }>;
+    update(req: Request, id: string, dto: UpdateBarbeariaDto): Promise<{
+        message: string;
+        barbearia: {
+            id: string;
+            nome: string;
+            telefone: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            endereco: string;
+            cidade: string;
+            estado: string;
+            descricao: string | null;
+            cep: string | null;
+            pontoReferencia: string | null;
+            latitude: number | null;
+            longitude: number | null;
+            whatsapp: string | null;
+            mensagemLembrete: string | null;
+            lembreteAtivo: boolean;
+            foto: string | null;
+            fotos: string[];
+            ativa: boolean;
+            slug: string;
+            ownerId: string;
+        };
+    }>;
+    remove(req: Request, id: string): Promise<{
+        message: string;
+    }>;
+}

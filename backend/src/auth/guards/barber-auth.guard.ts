@@ -1,26 +1,14 @@
-import {
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
 export class BarberAuthGuard extends AuthGuard('jwt') {
-  handleRequest<TUser = any>(
-    err: any,
-    user: { tipo?: string } | undefined,
-    _info: any,
-    _context: ExecutionContext,
-    _status?: any,
-  ): TUser {
-    if (err || !user) {
-      throw err ?? new UnauthorizedException();
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    await super.canActivate(context);
+    const req = context.switchToHttp().getRequest();
+    if (req.user?.tipo !== 'BARBEIRO') {
+      throw new ForbiddenException('Esta área é exclusiva para contas de barbeiro.');
     }
-    if (user.tipo !== 'BARBEIRO') {
-      throw new ForbiddenException('Acesso restrito a contas de barbeiro.');
-    }
-    return user as TUser;
+    return true;
   }
 }

@@ -1,0 +1,42 @@
+<header class="topo">
+  <a class="marca" routerLink="/barbearias"><i class="fa-solid fa-scissors" aria-hidden="true"></i> CortaAí</a>
+  <a class="perfil" routerLink="/perfil"><i class="fa-regular fa-user" aria-hidden="true"></i> Meu Perfil</a>
+</header>
+<section class="hero">
+  <div class="hero-conteudo">
+    <a class="voltar" routerLink="/barbearias"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Buscar barbearias</a>
+    <div class="hero-linha">
+      <div><span class="sobretitulo">SEU PRÓXIMO CORTE COMEÇA AQUI</span>
+        <h1>Meus agendamentos</h1>
+        <p>Seus horários, profissionais e cuidados em um só lugar.</p>
+      </div>
+      <div class="hero-icone" aria-hidden="true"><i class="fa-regular fa-calendar-check"></i></div>
+    </div>
+  </div>
+</section>
+<main>
+  <div class="titulo-lista"><h2>Suas reservas</h2>
+    @if (!carregando && !erro) { <span>{{ agendamentos.length }} agendamento{{ agendamentos.length === 1 ? '' : 's' }}</span> }
+  </div>
+  @if (carregando) {
+    <section class="estado" role="status"><div class="estado-icone"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i></div><h2>Buscando seus horários</h2><p>Estamos carregando seus agendamentos.</p></section>
+  } @else if (erro) {
+    <section class="estado" role="alert"><div class="estado-icone"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i></div><h2>Não conseguimos carregar suas reservas</h2><p>{{ erro }}</p><button class="botao" (click)="carregar()">Tentar novamente</button></section>
+  } @else {
+    <div class="reservas">
+      @for (agendamento of agendamentos; track agendamento.id) {
+        <article class="reserva">
+          <div class="reserva-topo"><div class="loja-icone"><i class="fa-solid fa-store" aria-hidden="true"></i></div><h2>{{ agendamento.barbearia.nome }}</h2><span class="status" [attr.data-status]="agendamento.status">{{ statusLabel(agendamento.status) }}</span></div>
+          <div class="quando"><i class="fa-regular fa-calendar" aria-hidden="true"></i><strong>{{ formatarData(agendamento.data) }} às {{ agendamento.horario }}</strong></div>
+          <div class="detalhes">
+            <div><span class="rotulo">SERVIÇO</span><strong>{{ agendamento.servico.nome }}</strong><span>{{ agendamento.servico.duracao }} min</span></div>
+            <div><span class="rotulo">PROFISSIONAL</span><strong>{{ agendamento.barbeiro.nome }}</strong></div>
+          </div>
+          <p class="endereco"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>{{ agendamento.barbearia.endereco }}</p>
+        </article>
+      } @empty {
+        <section class="estado vazio"><div class="estado-icone"><i class="fa-regular fa-calendar-plus" aria-hidden="true"></i></div><span class="sobretitulo">UM TEMPO PARA VOCÊ</span><h2>Seu próximo corte está te esperando</h2><p>Você ainda não tem agendamentos.<br>Encontre sua barbearia e escolha o melhor horário para você.</p><a class="botao" routerLink="/barbearias"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar barbearias</a></section>
+      }
+    </div>
+  }
+</main>
