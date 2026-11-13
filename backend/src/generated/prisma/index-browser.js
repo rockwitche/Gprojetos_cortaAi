@@ -179,6 +179,16 @@ exports.Prisma.BarbeiroScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.HorarioDisponivelScalarFieldEnum = {
+  id: 'id',
+  barbeiroId: 'barbeiroId',
+  diaSemana: 'diaSemana',
+  horaInicio: 'horaInicio',
+  horaFim: 'horaFim',
+  almocoInicio: 'almocoInicio',
+  almocoFim: 'almocoFim'
+};
+
 exports.Prisma.ServicoScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
@@ -187,6 +197,23 @@ exports.Prisma.ServicoScalarFieldEnum = {
   barbeariaId: 'barbeariaId',
   barbeiroId: 'barbeiroId',
   ativo: 'ativo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AgendamentoScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  horario: 'horario',
+  nomeCliente: 'nomeCliente',
+  telefoneCliente: 'telefoneCliente',
+  status: 'status',
+  guestTokenHash: 'guestTokenHash',
+  lembreteEnviado: 'lembreteEnviado',
+  userId: 'userId',
+  barbeariaId: 'barbeariaId',
+  barbeiroId: 'barbeiroId',
+  servicoId: 'servicoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -220,7 +247,9 @@ exports.Prisma.ModelName = {
   User: 'User',
   Barbearia: 'Barbearia',
   Barbeiro: 'Barbeiro',
-  Servico: 'Servico'
+  HorarioDisponivel: 'HorarioDisponivel',
+  Servico: 'Servico',
+  Agendamento: 'Agendamento'
 };
 
 /**

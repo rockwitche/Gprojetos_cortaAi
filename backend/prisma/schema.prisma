@@ -46,6 +46,7 @@ model User {
   updatedAt            DateTime  @updatedAt
 
   barbearias           Barbearia[]
+  agendamentos         Agendamento[]
 
   @@map("users")
 }
@@ -76,6 +77,7 @@ model Barbearia {
 
   barbeiros       Barbeiro[]
   servicos        Servico[]
+  agendamentos    Agendamento[]
 
   @@index([ativa, estado, cidade])
   @@index([ownerId])
@@ -93,9 +95,25 @@ model Barbeiro {
   updatedAt    DateTime   @updatedAt
 
   servicos     Servico[]
+  horarios     HorarioDisponivel[]
+  agendamentos Agendamento[]
 
   @@index([barbeariaId])
   @@map("barbeiros")
+}
+
+model HorarioDisponivel {
+  id            String   @id @default(uuid())
+  barbeiroId    String
+  barbeiro      Barbeiro @relation(fields: [barbeiroId], references: [id], onDelete: Cascade)
+  diaSemana     Int
+  horaInicio    String
+  horaFim       String
+  almocoInicio  String?
+  almocoFim     String?
+
+  @@unique([barbeiroId, diaSemana])
+  @@map("horarios_disponiveis")
 }
 
 model Servico {
@@ -111,7 +129,35 @@ model Servico {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
+  agendamentos Agendamento[]
+
   @@index([barbeariaId])
   @@index([barbeiroId])
   @@map("servicos")
+}
+
+model Agendamento {
+  id              String    @id @default(uuid())
+  data            String
+  horario         String
+  nomeCliente     String
+  telefoneCliente String
+  status          String    @default("PENDENTE")
+  guestTokenHash  String?
+  lembreteEnviado Boolean   @default(false)
+  userId          String?
+  user            User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  barbeariaId     String
+  barbearia       Barbearia @relation(fields: [barbeariaId], references: [id], onDelete: Cascade)
+  barbeiroId      String
+  barbeiro        Barbeiro  @relation(fields: [barbeiroId], references: [id], onDelete: Cascade)
+  servicoId       String
+  servico         Servico   @relation(fields: [servicoId], references: [id], onDelete: Restrict)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([barbeiroId, data, status])
+  @@index([barbeariaId, data])
+  @@index([userId, data])
+  @@map("agendamentos")
 }
